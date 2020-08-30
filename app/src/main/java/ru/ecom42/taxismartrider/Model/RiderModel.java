@@ -1,7 +1,7 @@
 package ru.ecom42.taxismartrider.Model;
 
 public class RiderModel {
-    private String firstName, LastName, phoneNumber;
+    private String firstName, LastName, phoneNumber, avatar;
 
     public RiderModel() {
     }
@@ -28,5 +28,13 @@ public class RiderModel {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
