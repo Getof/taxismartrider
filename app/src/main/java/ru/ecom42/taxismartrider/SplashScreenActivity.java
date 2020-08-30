@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +41,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import ru.ecom42.taxismartrider.Common.Common;
 import ru.ecom42.taxismartrider.Model.RiderModel;
 import ru.ecom42.taxismartrider.R;
+import ru.ecom42.taxismartrider.Utils.UserUtils;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -98,6 +101,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         listener = myFirebaseAuth -> {
             FirebaseUser user = myFirebaseAuth.getCurrentUser();
             if (user != null) {
+                //Update token
+                FirebaseInstanceId.getInstance()
+                        .getInstanceId()
+                        .addOnFailureListener(e -> Toast.makeText(SplashScreenActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show())
+                        .addOnSuccessListener(instanceIdResult -> {
+                            Log.d("TOKEN", instanceIdResult.getToken());
+                            UserUtils.updateToken(SplashScreenActivity.this, instanceIdResult.getToken());
+                        });
                 checkUserFromFirebase();
             } else {
                 showLoginLayout();

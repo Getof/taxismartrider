@@ -1,6 +1,8 @@
 package ru.ecom42.taxismartrider.Utils;
 
+import android.content.Context;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -13,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Map;
 
 import ru.ecom42.taxismartrider.Common.Common;
+import ru.ecom42.taxismartrider.Model.TokenModel;
 
 public class UserUtils {
 
@@ -33,5 +36,23 @@ public class UserUtils {
                         Snackbar.make(view, "Данные обновлены!", Snackbar.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public static void updateToken(Context context, String token) {
+        TokenModel tokenModel = new TokenModel(token);
+
+        FirebaseDatabase.getInstance()
+                .getReference(Common.TOKEN_REFERENCE)
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(tokenModel)
+                .addOnFailureListener(e -> Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+
+
     }
 }
