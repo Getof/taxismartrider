@@ -19,4 +19,7 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_maps">Map</string>
+    <string name="permission_require">Location permission required</string>
+    <string name="drivers_not_found">Ни одного водителя не найдено!</string>
+    <string name="not_found_key">Не найдено водителя с ключем</string>
 </resources>
